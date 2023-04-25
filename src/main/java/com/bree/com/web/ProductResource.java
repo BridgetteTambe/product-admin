@@ -1,4 +1,4 @@
-package com.bree.com.web.rest;
+package com.bree.com.web;
 
 import com.bree.com.models.Product;
 import com.bree.com.services.ProductService;
@@ -108,8 +108,9 @@ public class ProductResource {
     }
 
     @GetMapping("/products/not-process")
-    public ResponseEntity<List<Product>> findAllNotProcessedProducts() throws Exception {
-        LOG.info("Rest Request to find all product by findAllNotProcessedProducts : {} ");
+    public ResponseEntity<List<Product>> findAllNotProcessedProducts(
+            @RequestHeader(name = "X-USERNAME", required = false) String userName) throws Exception {
+        LOG.info("Rest Request to find all product by findAllNotProcessedProducts : {} ", userName);
         List<Product> all = this.productService.findAllNotProcessedProducts();
         return ResponseEntity.ok(all);
     }

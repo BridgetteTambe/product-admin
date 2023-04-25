@@ -1,4 +1,4 @@
-package com.bree.com.web.rest;
+package com.bree.com.web;
 
 import com.bree.com.models.Admin;
 import com.bree.com.services.AdminService;
