@@ -1,4 +1,4 @@
-package com.bree.com.web;
+package com.bree.com.resources;
 
 import com.bree.com.models.Product;
 import com.bree.com.services.ProductService;

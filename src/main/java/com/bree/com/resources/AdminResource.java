@@ -1,4 +1,4 @@
-package com.bree.com.web;
+package com.bree.com.resources;
 
 import com.bree.com.models.Admin;
 import com.bree.com.services.AdminService;
@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -74,6 +75,18 @@ public class AdminResource {
         List<Admin> all = this.adminService.findAll();
         return ResponseEntity.ok(all);
     }
+
+    @GetMapping("/admin/Login/{email}/{password}")
+    public Admin getEmailAndUsername(@PathVariable String email, @PathVariable String password) {
+        LOG.info("Rest request to get email and password: {} {}", email, password);
+        Admin customer = adminService.login(email, password);
+        if (ObjectUtils.isEmpty(customer)) {
+            throw new RuntimeException("Invalid email or password!");
+        }
+        return customer;
+    }
+
+
 
     @GetMapping("/admins/pageable")
     public ResponseEntity<Page<Admin>> findAll(Pageable pageable) throws Exception {

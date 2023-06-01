@@ -78,6 +78,11 @@ public class AdminServiceImpl implements AdminService {
         return adminRepository.findAll();
     }
 
+
+    public Admin login(String email, String password) {
+        return adminRepository.findByEmailAndPassword(email,password);
+    }
+
     /**
      * @param pageable
      * @return

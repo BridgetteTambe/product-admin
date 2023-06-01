@@ -21,4 +21,6 @@ public interface AdminService {
     Page<Admin> findAll(Pageable pageable);
 
     Admin findById(String id);
+
+    Admin login(String email, String password);
 }
