@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 
 @RequiredArgsConstructor
 @Service
@@ -42,19 +43,19 @@ public class ProductServiceImpl implements ProductService {
      * @param product
      * @return
      */
-    @Override
-    public Product update(Product product) {
-        LOG.info("Request to update product: {}", product);
-        return this.productRepository.save(product);
-    }
+//    @Override
+//    public Product update(Product product) {
+//        LOG.info("Request to update product: {}", product);
+//        return this.productRepository.save(product);
+//    }
 
     /**
      * @param product
      */
     @Override
-    public void delete(Product product) {
-        LOG.info("Request to delete product: {}", product);
-        this.productRepository.delete(product);
+    public void deleteAll() {
+        LOG.info("Request to delete product: {}");
+        this.productRepository.deleteAll();
     }
 
     /**

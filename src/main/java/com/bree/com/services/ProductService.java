@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
+import java.util.Set;
 
 public interface ProductService {
 
@@ -12,9 +13,9 @@ public interface ProductService {
 
     List<Product> saveAll(List<Product> products);
 
-    Product update(Product product);
+//    Set <Product> update(Product product);
 
-    void delete(Product product);
+    void deleteAll();
 
     void deleteById(String id);
 
