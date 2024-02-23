@@ -42,6 +42,7 @@ public class ProductResource {
         if(product.getId() == null){
             throw new Exception("Cant update a product with a null Id.");
         }
+
         Product save = this.productService.save(product);
         return ResponseEntity.ok(save);
     }
