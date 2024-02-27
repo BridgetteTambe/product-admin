@@ -78,5 +78,12 @@ public class ProductResource {
         return ResponseEntity.ok(HttpStatus.resolve(200));
     }
 
+    @GetMapping("/products/not-process")
+    public ResponseEntity<List<Product>> findAllNotProcessedProducts() throws Exception {
+        LOG.info("Rest Request to get products unprocess products : {}" );
+        List<Product> allNotProcessedProducts = this.productService.findAllNotProcessedProducts();
+        return ResponseEntity.ok(allNotProcessedProducts);
+    }
+
 
 }
