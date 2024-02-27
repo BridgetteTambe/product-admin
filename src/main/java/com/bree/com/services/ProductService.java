@@ -25,4 +25,6 @@ public interface ProductService {
     Product findById(String id);
 
     List<Product> findAllNotProcessedProducts();
+
+    List<Product> updateProductInBulk(List<Product> products);
 }

@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api")
-@CrossOrigin(origins = {"http://localhost:4201/", "http://localhost:4201","http://localhost:4201","https://product-admin-view.vercel.app/","https://product-customer-view.vercel.app/"})
+@CrossOrigin(origins = {"http://localhost:4201/", "http://localhost:4201", "http://localhost:4201", "https://product-admin-view.vercel.app/", "https://product-customer-view.vercel.app/"})
 public class ProductResource {
     private static final Logger LOG = LoggerFactory.getLogger(ProductResource.class);
 
@@ -37,9 +37,9 @@ public class ProductResource {
     }
 
     @PutMapping("/products")
-    public ResponseEntity<Product> update(@RequestBody Product product) throws Exception{
+    public ResponseEntity<Product> update(@RequestBody Product product) throws Exception {
         LOG.info("Rest Request to save products : {}", product);
-        if(product.getId() == null){
+        if (product.getId() == null) {
             throw new Exception("Cant update a product with a null Id.");
         }
 
@@ -48,30 +48,30 @@ public class ProductResource {
     }
 
     @GetMapping("/products/{id}")
-    public ResponseEntity<Product> findById(@PathVariable String id){
-        LOG.info("Rest request to get products by Id : {}" ,id);
-       Product product = this.productService.findById(id);
-       return ResponseEntity.ok(product);
+    public ResponseEntity<Product> findById(@PathVariable String id) {
+        LOG.info("Rest request to get products by Id : {}", id);
+        Product product = this.productService.findById(id);
+        return ResponseEntity.ok(product);
     }
 
     @GetMapping("/products")
-    public ResponseEntity<List <Product>>findAll()throws Exception{
+    public ResponseEntity<List<Product>> findAll() throws Exception {
         LOG.info("Rest Request to get all products");
         List<Product> getAll = this.productService.findAll();
         return ResponseEntity.ok(getAll);
     }
 
     @DeleteMapping("/products")
-    public ResponseEntity deleteAll () throws Exception {
+    public ResponseEntity deleteAll() throws Exception {
         LOG.info("Rest Request to delete all product");
-       this.productService.deleteAll();
+        this.productService.deleteAll();
         return ResponseEntity.ok(HttpStatus.ACCEPTED);
     }
 
     @DeleteMapping("/products/{id}")
     public ResponseEntity deleteById(@PathVariable String id) throws Exception {
         LOG.info("Rest Request to delete products by id : {} ", id);
-        if(id == null){
+        if (id == null) {
             throw new Exception("Cant delete products with a null id");
         }
         this.productService.deleteById(id);
@@ -80,9 +80,23 @@ public class ProductResource {
 
     @GetMapping("/products/not-process")
     public ResponseEntity<List<Product>> findAllNotProcessedProducts() throws Exception {
-        LOG.info("Rest Request to get products unprocess products : {}" );
+        LOG.info("Rest Request to get products unprocess products : {}");
         List<Product> allNotProcessedProducts = this.productService.findAllNotProcessedProducts();
         return ResponseEntity.ok(allNotProcessedProducts);
+    }
+
+    @PutMapping("/products/bulk-update")
+    public ResponseEntity<List<Product>> updateProductInBulk(@RequestBody List<Product> products) throws Exception {
+        LOG.info("Rest Request to get product in bulk: {}", products);
+        if (products == null) {
+            throw new Exception("Cant return empty products");
+        }
+        products = products.stream().map(product -> {
+            product.setProcessed(false);
+            return product;
+        }).collect(Collectors.toList());
+        List<Product> bulkProduct = this.productService.saveAll(products);
+        return ResponseEntity.ok(bulkProduct);
     }
 
 

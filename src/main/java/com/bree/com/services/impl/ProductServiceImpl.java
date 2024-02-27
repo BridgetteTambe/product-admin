@@ -50,7 +50,7 @@ public class ProductServiceImpl implements ProductService {
 //    }
 
     /**
-     * @param product
+     * @param
      */
     @Override
     public void deleteAll() {
@@ -105,5 +105,16 @@ public class ProductServiceImpl implements ProductService {
     public List<Product> findAllNotProcessedProducts() {
         LOG.info("Request to find  product not process");
         return productRepository.findAllByProcessedFalseOrProcessedNull();
+    }
+
+    /**
+     * @param product 
+     * @return
+     */
+
+
+    public List<Product>updateProductInBulk(List<Product>products){
+        LOG.info("Rest Request to update products in Bulk");
+        return productRepository.saveAll(products);
     }
 }
