@@ -91,10 +91,6 @@ public class ProductResource {
         if (products == null) {
             throw new Exception("Cant return empty products");
         }
-        products = products.stream().map(product -> {
-            product.setProcessed(false);
-            return product;
-        }).collect(Collectors.toList());
         List<Product> bulkProduct = this.productService.saveAll(products);
         return ResponseEntity.ok(bulkProduct);
     }
