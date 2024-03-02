@@ -3,9 +3,11 @@ package com.bree.com.resources;
 import com.bree.com.models.Admin;
 import com.bree.com.models.Product;
 import com.bree.com.services.ProductService;
+import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Description;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -32,6 +34,7 @@ public class ProductResource {
         if (product.getId() != null) {
             throw new Exception("Can not create new product with id." + product.getId());
         }
+        product.setProcessed(false);
         Product save = this.productService.save(product);
         return ResponseEntity.ok(save);
     }
@@ -78,6 +81,8 @@ public class ProductResource {
         return ResponseEntity.ok(HttpStatus.resolve(200));
     }
 
+
+    @Description("this will be called by the customer service to get all unprocessed products")
     @GetMapping("/products/not-process")
     public ResponseEntity<List<Product>> findAllNotProcessedProducts() throws Exception {
         LOG.info("Rest Request to get products unprocess products : {}");
@@ -85,6 +90,7 @@ public class ProductResource {
         return ResponseEntity.ok(allNotProcessedProducts);
     }
 
+    @Description("this will be called by the customer service to update products that have been processed")
     @PutMapping("/products/bulk-update")
     public ResponseEntity<List<Product>> updateProductInBulk(@RequestBody List<Product> products) throws Exception {
         LOG.info("Rest Request to get product in bulk: {}", products);
